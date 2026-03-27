@@ -1,0 +1,1 @@
+// Acá se define la forma del producto (la interface).-
