@@ -1,5 +1,6 @@
 import InventoryTable from "./components/InventoryTable";
 import { Package, AlertCircle, TrendingUp, DollarSign } from "lucide-react";
+import ProductForm from "./components/ProductForm";
 
 export default function App() {
   // Estos datos son solo para que veas la tabla linda ahora mismo.
@@ -71,6 +72,8 @@ export default function App() {
               + Agregar Producto
             </button>
           </div>
+
+          <ProductForm />
           
           {/* AQUÍ RENDERIZAMOS TU COMPONENTE */}
           <InventoryTable />
