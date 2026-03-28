@@ -71,7 +71,7 @@ export default function InventoryTable() {
                         <Minus className="w-3 h-3" />
                       </button>
                       
-                      <div className="flex flex-col items-center min-w-[40px]">
+                      <div className="flex flex-col items-center min-w-10">
                         <span className={`text-sm font-mono font-bold ${isLowStock ? 'text-red-400' : 'text-cyan-400'}`}>
                           {product.stock}
                         </span>
