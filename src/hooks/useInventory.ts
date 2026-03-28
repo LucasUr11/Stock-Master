@@ -32,7 +32,7 @@ export const useInventory = () => {
 
   // Actualizar Stock (Suma o Resta rápida)
   const updateStock = (id: string, amount: number) => {
-    setProducts(prev => prev.map(p => 
+    setProducts(prev => prev.map(p =>
       p.id === id ? { ...p, stock: Math.max(0, p.stock + amount) } : p
     ));
   };

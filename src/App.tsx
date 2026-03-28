@@ -1,16 +1,21 @@
 import InventoryTable from "./components/InventoryTable";
-import ProductForm from "./components/ProductForm";
 import { useInventory } from "./hooks/useInventory";
-import { Package, AlertCircle, TrendingUp, DollarSign, LayoutDashboard } from "lucide-react";
+import { Package, AlertCircle, TrendingUp, DollarSign } from "lucide-react";
 
 export default function App() {
-  const { products } = useInventory();
+
+  const { products, updateStock, deleteProduct, addProduct, updateProduct } = useInventory();
+
+  const totalCostARS = products.reduce((acc, p) => acc + (p.costUSD * 1400 * p.stock), 0);
+  const totalSalesARS = products.reduce((acc, p) => acc + (p.priceARS * p.stock), 0);
+  const profitMargin = totalSalesARS > 0
+    ? (((totalSalesARS - totalCostARS) / totalSalesARS) * 100).toFixed(1)
+    : "0";
 
   // --- Lógica para Estadísticas Reales ---
   const totalStockValue = products.reduce((acc, p) => acc + (p.priceARS * p.stock), 0);
   const lowStockCount = products.filter(p => p.stock <= p.minStock).length;
-  // Supongamos un margen promedio simple para el ejemplo
-  const avgMargin = products.length > 0 ? "24.5%" : "0%";
+  const totalUnits = products.reduce((acc, p) => acc + p.stock, 0);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black text-zinc-200 selection:bg-cyan-500/30">
@@ -63,38 +68,30 @@ export default function App() {
           />
           <StatCard
             title="Rendimiento"
-            value={avgMargin}
-            sub="Margen operativo"
-            icon={<TrendingUp className="w-5 h-5 text-cyan-400" />}
+            value={`${profitMargin}%`}
+            sub="Margen promedio estimado"
+            icon={<TrendingUp className="text-cyan-400" />}
           />
         </div>
 
-        {/* ESTRUCTURA DE DOS COLUMNAS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          {/* COLUMNA IZQUIERDA: FORMULARIO (Fijo en desktop) */}
-          <div className="lg:col-span-6 lg:sticky lg:top-28 space-y-4 flex flex-col">
-            <div className="flex items-center gap-2 px-2">
-              <LayoutDashboard className="w-4 h-4 text-cyan-500" />
-              <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400">Gestión de Entrada</h2>
-            </div>
-            <ProductForm />
+        <div className="lg:col-span-6 space-y-4">
+          <div className="flex flex-col items-end justify-between px-2">
+            <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 text-right w-full italic">
+              Base de Datos de Inventario
+            </h2>
+            <span className="text-[10px] text-zinc-500 font-mono tracking-[0.3em] uppercase">
+              {products.length} productos
+            </span>
           </div>
-
-          {/* COLUMNA DERECHA: TABLA */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="flex flex-col items-end justify-between px-2">
-              <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 text-right w-full italic">
-                Base de Datos de Inventario
-              </h2>
-              <span className="text-[10px] text-zinc-500 font-mono tracking-[0.3em] uppercase">
-                {products.length} productos
-              </span>
-            </div>
-            <InventoryTable />
-          </div>
-
+          <InventoryTable
+            products={products}
+            onAdd={addProduct}
+            onUpdate={updateStock}
+            onDelete={deleteProduct}
+            onUpdateProduct={updateProduct}
+          />
         </div>
+
       </main>
     </div>
   );
