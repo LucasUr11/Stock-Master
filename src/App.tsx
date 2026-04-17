@@ -15,7 +15,7 @@ export default function App() {
   // --- Lógica para Estadísticas Reales ---
   const totalStockValue = products.reduce((acc, p) => acc + (p.priceARS * p.stock), 0);
   const lowStockCount = products.filter(p => p.stock <= p.minStock).length;
-  const totalUnits = products.reduce((acc, p) => acc + p.stock, 0);
+  // const totalUnits = products.reduce((acc, p) => acc + p.stock, 0);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black text-zinc-200 selection:bg-cyan-500/30">
