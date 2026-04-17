@@ -1,14 +1,14 @@
 // src/components/InventoryTable.tsx
 import { type Product } from "../hooks/useInventory";
-import { 
-  Search, 
-  PackagePlus, 
-  Minus, 
-  Plus, 
-  AlertTriangle, 
-  Trash2, 
-  X, 
-  Pencil 
+import {
+  Search,
+  PackagePlus,
+  Minus,
+  Plus,
+  AlertTriangle,
+  Trash2,
+  X,
+  Pencil
 } from "lucide-react";
 import { useState } from "react";
 import ProductForm from "./ProductForm";
@@ -22,14 +22,14 @@ interface InventoryTableProps {
   onUpdateProduct: (id: string, product: Omit<Product, "id">) => void;
 }
 
-export default function InventoryTable({ 
-  products, 
-  onAdd, 
-  onUpdate, 
-  onDelete, 
-  onUpdateProduct 
+export default function InventoryTable({
+  products,
+  onAdd,
+  onUpdate,
+  onDelete,
+  onUpdateProduct
 }: InventoryTableProps) {
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -52,7 +52,7 @@ export default function InventoryTable({
 
   return (
     <div className="space-y-4">
-      
+
       {/* BARRA DE ACCIONES */}
       <div className="flex flex-col md:flex-row gap-4 items-center">
         <div className="relative group flex-1 w-full">
@@ -81,21 +81,21 @@ export default function InventoryTable({
       {/* MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
-          <div 
+          <div
             className="absolute inset-0 bg-black/70 backdrop-blur-md"
             onClick={handleCloseModal}
           />
-          
+
           <div className="relative w-full max-w-2xl transform transition-all animate-in fade-in zoom-in duration-200">
-            <button 
+            <button
               onClick={handleCloseModal}
-              className="absolute -top-12 right-0 p-2 text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-widest"
+              className="absolute -top-12 right-0 p-2 text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-widest cursor-pointer"
             >
               Cerrar <X className="w-5 h-5" />
             </button>
-            
+
             <div className="shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-950">
-              <ProductForm 
+              <ProductForm
                 initialData={editingProduct}
                 onSave={(formData) => {
                   if (editingProduct) {
@@ -104,7 +104,7 @@ export default function InventoryTable({
                     onAdd(formData);
                   }
                   handleCloseModal();
-                }} 
+                }}
               />
             </div>
           </div>

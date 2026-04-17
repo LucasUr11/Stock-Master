@@ -1,1 +1,0 @@
-// La página principal que une todos los componentes.-
